@@ -2,6 +2,7 @@
 
 namespace marionnewlevant\snitch\migrations;
 
+use Craft;
 use craft\db\Migration;
 
 /**
@@ -30,8 +31,8 @@ class m190408_195351_support_multiple_types extends Migration
 
         // foreign keys: our userId must be a user id
         $this->addForeignKey(
-            $this->db->getForeignKeyName(),
-            '{{%snitch_collisions}}', 'userId', '{{%users}}', 'id', 'CASCADE');
+            $this->db->getForeignKeyName('{{%snitch_collisions}}', 'userId'),
+            '{{%snitch_collisions}}', 'userId', '{{%users}}', 'id', 'CASCADE', null);
     }
 
     /**

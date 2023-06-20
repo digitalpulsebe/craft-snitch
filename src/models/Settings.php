@@ -1,6 +1,6 @@
 <?php
 /**
- * Snitch plugin for Craft CMS
+ * Snitch plugin for Craft CMS 3.x
  *
  * Report when two people might be editing the same entry, category, or global
  *
@@ -10,7 +10,11 @@
 
 namespace marionnewlevant\snitch\models;
 
+use marionnewlevant\snitch\Snitch;
+
+use Craft;
 use craft\base\Model;
+use craft\validators\ArrayValidator;
 
 /**
  * Snitch Settings Model
@@ -35,7 +39,7 @@ class Settings extends Model
     const SERVERPOLLINTERVAL = 2;
     const MESSAGE = 'May also be edited by: <a href="mailto:{{user.email}}">{{user.username}}</a>.';
     const ELEMENT_INPUTIDSELECTOR = 'form input[type="hidden"][name="sourceId"]' // entry forms
-        .', form input[type="hidden"][name*="elementId"]' // slideout entry forms
+        .', form input[type="hidden"][name="elementId"]' // modals entry forms
         .', form input[type="hidden"][name="setId"]' // global set
         .', form input[type="hidden"][name="categoryId"]' // category
         .', form input[type="hidden"][name="userId"]' // user
@@ -47,22 +51,22 @@ class Settings extends Model
      *
      * @var int
      */
-    public int $serverPollInterval = self::SERVERPOLLINTERVAL;
+    public $serverPollInterval = self::SERVERPOLLINTERVAL;
 
     /**
      * @var string
      */
-    public string $messageTemplate = self::MESSAGE;
+    public $messageTemplate = self::MESSAGE;
 
     /**
      * @var string
      */
-    public string $elementInputIdSelector = self::ELEMENT_INPUTIDSELECTOR;
+    public $elementInputIdSelector = self::ELEMENT_INPUTIDSELECTOR;
 
     /**
      * @var string
      */
-    public string $fieldInputIdSelector = self::FIELD_INPUTIDSELECTOR;
+    public $fieldInputIdSelector = self::FIELD_INPUTIDSELECTOR;
 
 
     // Public Methods
@@ -78,7 +82,7 @@ class Settings extends Model
      *
      * @return array
      */
-    public function rules(): array
+    public function rules()
     {
         $rules = parent::rules();
         $myRules = [
@@ -89,6 +93,8 @@ class Settings extends Model
             ['elementInputIdSelector', 'string'],
             ['fieldInputIdSelector', 'string'],
         ];
-        return array_merge($rules, $myRules);
+        $rules = array_merge($rules, $myRules);
+
+        return $rules;
     }
 }

@@ -11,7 +11,6 @@
 namespace marionnewlevant\snitch\records;
 
 use craft\db\ActiveRecord;
-use DateTime;
 
 /**
  * SnitchRecord Record
@@ -28,12 +27,6 @@ use DateTime;
  * @author    Marion Newlevant
  * @package   Snitch
  * @since     1.0.0
- *
- * @property int $id
- * @property int $snitchId
- * @property string|null $snitchType
- * @property int $userId
- * @property DateTime $whenEntered
  */
 class SnitchRecord extends ActiveRecord
 {
@@ -52,7 +45,7 @@ class SnitchRecord extends ActiveRecord
      *
      * @return string the table name
      */
-    public static function tableName(): string
+    public static function tableName()
     {
         return '{{%snitch_collisions}}';
     }
